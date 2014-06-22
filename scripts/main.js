@@ -752,7 +752,7 @@ BakeOff = (function(){
 						bake = response.data.bake;
 						//success! add the new bake to the list and show our list
 						ViewModel.profileModel.recipes.unshift(bake);
-						this._viewProfile();
+						self._viewProfile();
 						
 						BakeOff._showOverlay('icon-heart','Bake complete!',bake);
 						
