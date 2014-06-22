@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>BakeOff - Discover recipes, challenge your friends</title>
+        <meta name="description" content="BakeOff App - Discover recipes, challenge your friends">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <meta name="fragment" content="!">
+        
+        <!-- Facebook Meta Tags -->
+        <meta property="fb:app_id" content="215224641951644"> 
+		<meta property="og:type" content="website"> 
+		<meta property="og:url" content="http://www.bakeoff.co"> 
+		<meta property="og:locale" content="en_GB">
+		<meta property="og:title" content="BakeOff">
+		<meta property="og:description" content="Discover recipes, challenge your friends"> 
+		<meta property="og:image" content="http://www.bakeoff.co.s3.amazonaws.com/images/icon/android/playstore-icon.png"> 
+		
+		<!-- Twitter meta tags -->
+		<meta property="twitter:card" content="summary">
+		<meta property="twitter:site" content="@BakeOffApp">
+		<meta property="twitter:title" content="BakeOff">
+		<meta property="twitter:description" content="Discover recipes, challenge your friends">
+		<meta property="twitter:image" content="http://www.bakeoff.co/images/icon/android/playstore-icon.png">
+		<meta property="twitter:twitter:image0" content="http://www.bakeoff.co/images/merchandising/discover.jpg">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link rel="apple-touch-icon" href="/images/icon/ios/icon.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="/images/icon/ios/icon-72.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="/images/icon/ios/icon@2x.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="/images/icon/ios/icon-72@2x.png">
+
+        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="printstyle/print.css" type="text/css" media="print">
+    </head>
+    <body>
+    <div id="fb-root"></div>
+	
+	<!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+    
+    <div class="navbar navbar-static-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="brand" style="display:none" href="/" data-bind="visible: !loggedIn()">BakeOff</a>
+				<a class="brand" style="display:none" href="/" data-bind="visible: loggedIn() , click: function(){BakeOff._viewProfile();}">BakeOff</a>
+				
+				<ul class="nav pull-right" data-bind="visible: loggedIn()" style="display:none">
+			    	<!-- Notifications -->
+			    	<li class="dropdown">
+			    		<a href="#" class="dropdown-toggle challenge-toggle" data-toggle="drop down" data-bind="visible: profileModel.notifications().length>0">
+			    			<span class="badge badge-success" data-bind="text: profileModel.notifications().length"></span>
+			    			<b class="caret"></b>
+			    		</a>
+			    		<ul class="dropdown-menu challenges">
+			    			  <li>&nbsp;<i class="icon-trophy"></i> Challenges</li>
+			    			  <!-- ko foreach: profileModel.notifications() -->
+				              <li>
+					              	<div class="thumbnail">
+						                  <img data-bind="attr: {src: bake.photoUrl}" src="">
+						                  <div class="caption">
+						                    <h5 data-bind="text: bake.recipeTitle"></h5>
+						                    <div class="row-fluid">
+						                    	<a href="#" class="btn btn-success span12" data-bind="attr: { href : '#!challenge/'+id}">View</a>
+						                    </div>
+						                  </div>
+						             </div>
+				              </li>
+				              <!-- /ko -->
+						</ul>
+			    	</li>
+			    	<!-- End Notifications -->
+			    	<li>
+			    		<a href="#" data-bind="click: function(){BakeOff._startBake();}" id="newRecipe"><span class="hidden-phone">New Recipe</span> <i class="icon-pencil"></i></a>
+			    	</li>
+			    	
+			    	<li>
+			    		<a href="#" class="visible-phone" data-bind="click: function(){BakeOff._viewFeed();}"><i class="icon-tasks"></i></a>
+			    	</li>
+			    	
+			    	<li class="dropdown">
+					    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+					      <span class="hidden-phone">Account</span>
+					      <span class="visible-phone"><i class="icon-reorder"></i></span> 
+					      <b class="caret hidden-phone"></b>
+					    </a>
+					    <ul class="dropdown-menu">
+					    	<li><a href="#" data-bind="click: function(){BakeOff._viewProfile();}"><i class="icon-user"></i> Profile</a></li>
+		            		<li><a href="#" data-bind="click: function(){BakeOff._logout();}"><i class="icon-signout"></i> Logout</a></li>
+					    </ul>
+					</li>
+			    </ul>
+			    <ul class="nav pull-right" data-bind="visible: !loggedIn() && !loading()">
+			    	<li>
+			    		<a href="#" data-bind="click: function(){ViewModel.recipeView(false);ViewModel.welcomeModel.register(true);}">Signup</a>
+			    	</li>
+			    	<li>
+			    		<a href="#" class="login" data-toggle="dropdown">Login</a>
+			    		<div class="dropdown-menu">
+                            <form id="formLogin" class="form" action="#" data-bind="submit: function(){BakeOff._authenticateWithForm(loginForm);}">
+                            	<a class="btn btn-facebook btn-block pull-left" href="#" data-bind="click: function(){BakeOff._login();}"><i class="icon-facebook"></i> Login with Facebook</a>
+                            	
+                            	<div class="clearfix">
+                            		<hr class="horizontal-rule-or">
+                            	</div>
+                            	
+                            	<div class="alert alert-block alert-error" style="display:none">
+								  <h4>Oops.</h4>
+								  Check your email address and password or use Facebook login.
+								</div>
+                            	
+							    <div class="input-prepend">
+							    	<span class="add-on"><i class="icon-user"></i></span>
+							    	<input name="email" type="email" placeholder="Email" data-bind="value:loginForm.email">
+							    </div>
+							    <div class="input-prepend">
+							    	<span class="add-on"><i class="icon-lock"></i></span>
+							    	<input name="password" type="password" placeholder="Password" data-bind="value:loginForm.password">
+							    </div>
+							    
+							    <button type="submit" class="btn pull-right" id="loginFormButton" data-loading-text="Logging in..">Login</button>
+							</form>
+                        </div>
+			    	</li>
+			    </ul>
+	        </div>
+	    </div><!-- /navbar-inner -->
+	    <div class="stitching"></div>
+	</div>
+	
+	<div class="content-wrapper">
+	
+	<div data-bind="visible: !loggedIn() && !recipeView()" style="display:none"> 
+		<div class="bakeoff-unit-wrapper">
+			<div class="gradient"></div>
+			<div class="hero-unit bakeoff-unit">
+	        	<div data-bind="visible: !welcomeModel.whyFacebook() && !welcomeModel.register()">
+	        	
+		            <h1><span class="hero-title">BakeOff</span></h1>
+		            <blockquote>
+		            	<p>Discover recipes, challenge <span data-typer-targets="Sarah, Laura, Gemma, Daniel, Mary, Paul , your friends">your friends</span></p>
+		            </blockquote>
+		            
+		            <div data-bind="visible: !loading()">
+		            
+			            <p class="row-fluid">	
+			            	<button class="btn btn-facebook btn-large btn-fblogin" data-bind="click: function(){BakeOff._login();}">
+			            		<i class="icon-facebook icon-3x"></i>
+			            		<span>&nbsp;Login with Facebook</span>
+			            	</button>
+			            	<span class="hidden-phone">or</span>
+			            	<button class="btn btn-large btn-signup" data-bind="click: function(){ViewModel.welcomeModel.register(true);}">
+			            		<i class="icon-lock"></i>
+			            		Signup via email
+			            	</button>
+			            	
+			            	<br>
+			            	
+			            	<a href="#" class="why-facebook" data-bind="click: function(){ViewModel.welcomeModel.whyFacebook(true);}">Why Facebook login?</a>
+
+			            </p>
+			            
+			            <div class="mobile-banner hidden-phone">Works on all devices 
+			            	<i class="icon-desktop icon-2x"></i> 
+			            	<i class="icon-tablet icon-2x"></i>&nbsp;
+			            	<i class="icon-mobile-phone icon-2x"></i>&nbsp;
+			            </div>
+		            
+		            </div>
+	            
+	            </div>
+	            
+		    	<p class="animated pulse" id="loading" data-bind="visible: loading()" style="display:none">
+		        	<img src="/images/muffin.png" alt="loading..">
+		        	<br>
+		        	<span>Baking..</span>
+		        </p>
+	        
+	        
+		        <div data-bind="visible: !loading() && welcomeModel.whyFacebook()" class="why-facebook-content">
+		        	<h1>Why Facebook login?</h1>
+		        	<div class="row-fluid">
+			        	<div class="span6 content">
+			        		<p>
+				        		We love making things easy at <span class="brand">BakeOff</span>, that's why we chose Facebook login for our service. We will never post to your Facebook profile without asking first (in fact it is against their policy) and we only ask for the information to create your profile (name, email and profile photo). Don't agree? Drop us a line at <a href="mailto:hello@bakeoff.co">hello@bakeoff.co</a>
+			        		</p>
+			        		<div class="fill"></div>
+			        	</div>
+		        	</div>
+		        	<div class="row-fluid">
+		        		<div class="span6">
+		        			<p class="clearfix"></p>
+		            		<button class="btn btn-success btn-large btn-fblogin" data-bind="click: function(){BakeOff._login();}">
+			            		<i class="icon-facebook icon-3x"></i>
+			            		<span>&nbsp;Login safely with Facebook</span>
+			            	</button>
+
+		            	</div>
+		        	</div>		        	
+		        </div>
+		        
+		        <div data-bind="visible: !loading() && welcomeModel.register()" id="registerForm">
+		        	<div class="row-fluid">
+		        		<div class="span8 content">
+				        	<form class="form-horizontal" data-bind="submit: function(){BakeOff._register();}">
+				        	  <div class="alert alert-error" style="display:none"></div>
+				        	  <h3>Hello. I can't wait to start baking, my name is </h3>
+		        			  <input type="text" id="inputName" placeholder="Paul Smith" data-bind="value: registerForm.name">
+		        			  
+		        			  <h3>and my email address is </h3>
+							  <input type="email" id="inputEmail" placeholder="hello@bakeoff.co" data-bind="value: registerForm.email">
+							  
+							  <h3>. Please set my password to </h3>
+							  <input type="password" id="inputPassword" pattern=".{5,}" placeholder="ilovebaking123" data-bind="value: registerForm.password">
+
+							  <div class="control-group">
+							    <div class="controls">
+							      <button type="submit" class="btn btn-success btn-large span8" id="registerButton" data-loading-text="Please wait..">Ok, take me to the good stuff!</button>
+							    </div>
+							  </div>
+							</form>
+							<div class="fill"></div>
+		        		</div>
+		        	</div>
+		        </div>
+	        </div>  
+        </div>
+        
+        <div class="hero-unit video-unit" data-bind="visible:!welcomeModel.register() && welcomeModel.bakes().length>0">
+        	<!-- latest recipes	-->
+        	<div class="latest-recipes">
+				<div id="select" data-bind="fadeVisible:welcomeModel.bakes().length>0" style="display:none"> 
+				  <div id="content">
+				    <div id="head">
+				      <h1>Latest Recipes</h1>
+				    </div>  
+				    <div id="list" data-bind="foreach: welcomeModel.bakes">
+				      <div>
+				        <i data-bind="style: {backgroundImage: 'url(\''+photoUrl+'\')'}"></i>
+				        <h3><a href="#" data-bind="attr: { href : '#!recipe/'+recipeId+'/'+userId} , text: recipeTitle"></a></h3>
+				        <span class="icon-chevron-right"></span>
+				      </div>  
+				    </div> 
+				  </div> 
+				</div>
+			</div>
+        </div> 
+        
+	    <div class="container marketing">
+	       
+	       <hr class="featurette-divider">
+	       
+	       <div class="featurette-media">
+	        <img class="featurette-image pull-right" src="/images/features/feature_discover.png" alt="Discover">
+	        <h2 class="featurette-media-heading">Discover</h2>
+	        <p class="lead">
+	        	Discover <i>real</i> recipes, the ones your friends are baking.
+	        </p>
+	      </div>
+	      
+	      <hr class="featurette-divider">
+	      
+	      <div class="featurette-media">
+	        <img class="featurette-image pull-left" src="/images/features/feature_bake.png" alt="Bake">
+	        <h2 class="featurette-media-heading">Bake</h2>
+	        <p class="lead">
+	        	Take a photo of your creation and remember it forever.
+	        </p>
+	      </div>
+	      
+	      <hr class="featurette-divider">
+	      
+	      <div class="featurette-media">
+	        <img class="featurette-image pull-right" src="/images/features/feature_challenge.png" alt="Challenge">
+	        <h2 class="featurette-media-heading">Challenge</h2>
+	        <p class="lead">
+	        	Challenge your friends to bake it and earn respect.
+	        </p>
+	      </div>
+    	</div>
+    </div>
+    
+    <div data-bind="visible: loggedIn() || recipeView()" style="display:none">
+    	<div class="container">
+    		<div class="content">
+    			        
+		        <div class="row-fluid">
+		        
+		          <div class="span8 offset2 feed-wrapper" data-bind="visible: feedView()">
+		          	<div class="row-fluid">
+	            		<h3 class="header span12"><i class="icon-tasks"></i> News Feed</h3>
+	            	</div>
+					<ul class="spinner" data-bind="visible: feedModel.items().length == 0">
+					    <li></li>
+					    <li></li>
+					    <li></li>
+					    <li></li>
+					</ul>
+		          	<!-- News Feed -->
+		          	<ul class="news-feed">
+		          		<!-- ko foreach: feedModel.items -->
+					   <li>
+					      <img class="icon" width="48" alt="" data-bind="attr: {src: user.profilePhoto}" src="">
+					      <a href="#" class="user" data-bind="text: user.firstName , attr: { href : '#!user/'+user.id}"></a> 
+					      <span data-bind="if: !challengeBake">baked</span> 
+					      <span data-bind="if: challengeBake">completed a challenge - </span>
+					      <a href="#" data-bind="attr: { href : '#!recipe/'+bake.recipeId+'/'+user.id} , text: bake.recipeTitle"></a>
+					      <div class="thumbnail-wrapper">
+					      	  <blockquote data-bind="visible: bake.tagLine.length>0 && !challengeBake">
+					      	  	<p>
+					      	  		<i class="icon-quote-left"></i>
+					      	  		<span data-bind="text: bake.tagLine"></span>
+					      	  	</p>
+					      	  </blockquote>
+					      	  <div class="span12 challenge-text" data-bind="if:challengeBake">
+					      	  	<i class="icon-thumbs-up"></i>
+					      	  	Which do you prefer? Vote by clicking a picture.
+					      	  </div>
+						      <ul class="thumbnails" data-bind="if: !challengeBake">
+						         <li class="crop">
+						         	<div class="image span12" data-bind="style: {backgroundImage: 'url(\''+bake.photoUrl+'\')'} , click: function(){location.href='#!recipe/'+bake.recipeId+'/'+user.id;}"></div>
+						         </li>
+						      </ul>
+						      <ul class="thumbnails" data-bind="if: challengeBake">
+						         <li class="crop">
+						         	<div class="image span6 vote" data-bind="style: {backgroundImage: 'url(\''+bake.photoUrl+'\')'} , click: function(){BakeOff._vote(challengeBake);}">
+						         		<div class="vote-tick"><i class="icon-4x" data-bind="css: bake.voteIcon"></i></div>
+						         		<div class="percentage-wrapper" data-bind="css: challengeBake.percentageStatus">
+						         			<div class="percentage" data-bind="easyPieChart:challengeBake , attr: {'data-percent': challengeBake.percentage}"><span data-bind="text:challengeBake.percentage"></span>%</div>
+						         		</div>
+						         	</div>
+						         	<div class="image span6 vote" data-bind="style: {backgroundImage: 'url(\''+challengeBake.photoUrl+'\')'} , click: function(){BakeOff._vote(bake);}">
+						         		<div class="vote-tick"><i class="icon-4x" data-bind="css: challengeBake.voteIcon"></i></div>
+						         		<div class="percentage-wrapper" data-bind="css: bake.percentageStatus">
+						         			<div class="percentage" data-bind="easyPieChart:challengeBake , attr: {'data-percent': bake.percentage}"><span data-bind="text:bake.percentage"></span>%</div>
+						         		</div>
+						         	</div>
+						         </li>
+						      </ul>
+					      </div>
+					      <div class="meta">
+					      	<span class="from" data-bind="text: bake.prettyDate"></span>
+					      	
+					      	<a href="#" data-pin-do="buttonPin" data-pin-config="none" data-bind="attr: {href: '//www.pinterest.com/pin/create/button/?'+'url='+encodeURIComponent('http://www.bakeoff.co/#!recipe/'+bake.recipeId+'/'+user.id)+'&media='+encodeURIComponent(bake.photoUrl)+'&description='+encodeURIComponent(bake.recipeTitle) , id: 'pin'+bake.id}" target="_blank">
+								<img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" class="greyscale">
+							</a>
+					      	
+					      	<div class="pull-right">
+					      		<button class="pull-right btn btn-space btn-postcard" data-bind="click: function(){BakeOff._postcard(bake.id,bake.recipeTitle,bake.photoUrl,bake.recipeId,user.id);}">
+						      		<i class="icon-envelope-alt"></i>&nbsp;Postcard
+						      		<div class="tool-tip left">
+						      			Send this recipe to a friend as a <strong>full colour</strong> postcard. <br> 
+						      			For only <a href="#">&pound;2.99</a>
+						      		</div>
+						      	</button>
+
+					      		
+					      		<div class="share share_type_bakeoff">
+									<span class="share__count" data-bind="text: bake.likes().length"></span>
+									<button class="btn" href="#" data-bind="click: function(){BakeOff._likeBake(bake.id,bake)} , css : {'active btn-liked' : bake.hasLiked()}"><i class="icon-heart" data-bind="css : {'animated bigpulse' : bake.hasLiked()}"></i></button>
+								</div>
+					      	</div>
+					      </div>
+					      
+					      <hr>
+					      
+					      <!-- Comments -->
+					      	<a href="#" class="more-comments span12" data-bind="visible: bake.comments().length>1, css :'more-comments-'+bake.id , click:function(){BakeOff._showComments(bake.id);}">
+								View previous comments
+							</a>
+					      
+						    <ul class="news-feed news-feed-comments" data-bind="foreach:bake.comments , css:'comments-'+bake.id">
+							   <li class="comment comment-hideable">
+							      <img class="icon" width="30" alt="" data-bind="attr: {src: profilePhoto}" src="">
+							      <a href="#" data-bind="text: firstName , attr: { href : '#!user/'+userId}"></a> 
+							      <span data-bind="text: comment"></span>
+							      <div class="comment-icon-wrapper"><i class="icon-comment"></i></div>
+							      <div class="meta"><span class="from" data-bind="text: prettyDate"></span></div>
+							   </li>
+							</ul>
+							
+							<!-- Reply -->
+							<ul class="news-feed">
+								<li class="comment feed-comment">
+							   		<img class="icon" width="30" alt="" data-bind="attr: { src: $root.profileModel.photo }" src="">
+							   		<form id="challengeCommentForm" action="#" data-bind="submit: function(){BakeOff._commentBake(bake.id,$root.challengeModel.comment,bake.comments,'#comment-'+bake.id,true);}">
+								   		<div class="input-append">
+										  <input class="span11" placeholder="Comment.." type="text" data-bind="value: $root.challengeModel.comment, valueUpdate:[&quot;afterkeydown&quot;,&quot;propertychange&quot;,&quot;input&quot;]">
+										  <button class="btn hidden-phone" type="submit" data-bind="enable: $root.challengeModel.comment()!='' , style: {id:'comment-'+bake.id}" data-loading-text="Posting.."><i class="icon-chevron-right"></i></button>
+										</div>
+										<button class="btn visible-phone span12" type="submit" data-bind="enable: $root.challengeModel.comment()!='' , attr: {id:'comment-'+bake.id}" data-loading-text="Posting..">Comment</button>
+									</form>
+							   </li>
+							</ul>
+							<!-- End Reply -->
+						   <!-- End Comments -->
+					   </li>
+					   <!-- /ko -->
+					   <li class="load-more" data-bind="visible: feedModel.items().length > 0 && feedModel.items().length < feedModel.count()">
+					   	<a href="#" class="load-more span11" data-bind="click: function(){BakeOff._loadFeed();}">Load more <i class="icon-arrow-down"></i></a>
+					   </li>
+					</ul>
+					<!-- End News Feed -->
+		          </div>
+		          
+		          <div class="span8 offset2" data-bind="css: { wood : profileView() } , visible : !feedView() && (profileView()||bakeView())">
+		          		<div class="row-fluid" id="bakeHeader" data-bind="visible: bakeView()">
+		            		<h3 class="header span12"><i class="icon-pencil"></i> Add a new recipe <span class="hidden-phone">and challenge your friends to make it better.</span></h3>
+		            	</div>
+		          		<!-- End Bake View -->
+			            <div id="bakeView" data-bind="visible: bakeView()" style="display:none">
+			           		 <!-- 
+			            	<div class="hidden-phone"> -->
+				            	<!-- Recipe URL -->
+				            	<!-- 
+				            	<div class="row-fluid">
+					            	<form class="form-horizontal span12 no-bottom-margin" data-bind="submit: ingredientsModel.parseRecipe" autocomplete="off">
+					            		<div class="row-fluid control-group" id="urlForm" data-bind="css: { error: ingredientsModel.urlError() }">
+					            			<span class="span9"><i class="icon-desktop"></i>&nbsp;Enter a recipe url</span>
+					            			<div class="input-prepend input-append span9">
+					            				<span class="add-on">bbc.co.uk/food/recipes/</span>
+					            				<input type="text" class="span6" data-bind='value: ingredientsModel.recipeUrl, valueUpdate:["afterkeydown","propertychange","input"]'>										    
+											    <button class="btn" disabled="disabled" data-bind="visible: ingredientsModel.parsingUrl()"><i class="icon-refresh icon-spin"></i></button>
+											    
+											    <button class="btn" type="submit" data-bind="visible: !ingredientsModel.parsingUrl()"><i class="icon-chevron-right"></i></button>
+	
+					            			</div>
+				            			</div>
+				            		</form>
+			            		</div>
+			            		<div id="urlResponse"></div>
+			            		 -->
+			            		<!-- End Recipe URL -->
+				            <!-- 
+				            	<hr class="horizontal-rule-or"/>
+			            	</div>
+			            	 -->
+			            	
+			            	<!-- Recipe Image -->
+			            	<div class="row-fluid recipe-image">
+			            		<div class="span12">
+									<a href="#" data-bind="click: function(){BakeOff._pickFile(ViewModel.ingredientsModel.photoUrl);}" class="relative">
+										<img data-bind="attr: { src: ingredientsModel.photoUrlSrc() }" src="" class="dropshadow" alt="Recipe Photo">
+										<i class="icon-camera icon-white icon-2x bottom-right"></i>
+									</a>
+								</div>
+							</div>
+							<!-- End Recipe Image -->
+							
+							<!-- Progress Photo Upload -->
+							<div class="status-progress" data-bind="visible: !ingredientsModel.photoUploaded()">
+				
+								<ul class="clearfix row-fluid">
+				
+									<li><a href="#" class="current">1<span class="progress-info">Upload a picture!</span></a></li>
+									<li class="center"><a href="#">2</a></li>
+									<li><a href="#" class="pull-right">3</a></li>
+				
+								</ul>
+				
+							</div>
+							<!-- / Progess Photo Upload -->
+			            
+					    	<div class="form-horizontal" id="bakeForm">
+					    			<p class="legend">	
+										<i class="icon-pencil"></i>
+										<input type="text" class="look-editible-large span12" id="recipeName" placeholder="Recipe Name" data-bind="value: ingredientsModel.bakeName , valueUpdate: 'keyup'">
+									</p>
+									
+									<!-- Progress Recipe Name -->
+									<div class="status-progress" data-bind="visible: ingredientsModel.bakeName() == '' && ingredientsModel.photoUploaded()">
+						
+										<ul class="clearfix row-fluid">
+						
+											<li><a href="#">1</a></li>
+											<li class="center"><a href="#" class="current">2 <span class="progress-info">Name your recipe!</span></a></li>
+											<li><a href="#" class="pull-right">3</a></li>
+						
+										</ul>
+						
+									</div>
+									<!-- / Progess Recipe Name -->
+								    
+								    <p class="clearfix">&nbsp;</p>
+								    
+								    <!-- Recipe -->								    
+									<!-- Ingredients -->
+									<div data-bind="foreach: ingredientsModel.ingredientsList">
+
+										<form action="#" class="ingredients-form" data-bind="submit: addItem" autocomplete="off">
+
+											<input type="hidden" name="ingredientsHeader" placeholder="Ingredients Title" data-bind="value: ingredientsHeader()" value="">
+											<select multiple="multiple" style="display:none" data-bind="options: items"> </select>
+
+											<table class="table table-striped table-condensed ingredients-table">
+												<!-- Ingredients header -->
+												<caption class="pull-left">
+													<p>
+														<input data-bind="value: ingredientsHeader" type="text" class="look-editible">
+													</p>
+													<a href="#" class="btn pull-right" data-bind="visible:showAdd , click: function(){$root.ingredientsModel.addIngredientsList();}">+</a>
+												</caption>
+												<!-- End Ingredients Header -->
+
+												<tbody data-bind="foreach: items">
+													<tr>
+														<td style="width: 70%"><input type="text" value="" data-bind="value: $parent.items()[$index()]"></td>
+														<td style="width: 30%"><a href="#" class="btn pull-right" data-bind="click: function(){$root.ingredientsModel.removeItem($data)}"><i class="icon-remove"></i></a></td>
+													</tr>
+												</tbody>
+											</table>
+											<div class="row-fluid">
+												<div class="input-append span12">
+												  <input class="span9" id="appendedInputButton" type="text" placeholder="type ingredient e.g flour" data-bind="value: itemToAdd, valueUpdate:[&quot;afterkeydown&quot;,&quot;propertychange&quot;,&quot;input&quot;]">
+												  <button class="btn" type="submit" data-bind="enable: itemToAdd().length > 0">Add item</button>
+												</div>
+											</div>
+
+											<!-- Progress Ingredients -->
+											<div class="status-progress" data-bind="visible: $root.ingredientsModel.bakeName() != '' && $root.ingredientsModel.photoUploaded() && $root.ingredientsModel.ingredientsList()[0].items().length==0">
+
+												<ul class="clearfix row-fluid">
+													<li><a href="#">1</a></li>
+													<li class="center"><a href="#">2</a></li>
+													<li><a href="#" class="pull-right current">3 <span class="progress-info">What are the ingredients!</span></a></li>
+												</ul>
+
+											</div>
+											<!-- / Progess Ingredients -->
+
+										</form>
+
+									</div>
+									<!-- End Ingredients -->
+
+									<p class="clearfix">&nbsp;</p>
+
+									<h4>Description</h4>
+									<div class="form-progress">
+										<textarea class="span12" style="width:100%" rows="10" name="description" placeholder="Write your description here.." data-bind="value: ingredientsModel.description"></textarea>
+										<span class="progress-info" data-bind="visible:ingredientsModel.bakeName() != '' && ingredientsModel.photoUploaded() && ingredientsModel.ingredientsList()[0].items().length==0 && ingredientsModel.description == ''">
+											How did you make it?
+										</span>
+									</div>
+									<!-- /Recipe -->
+									
+                                    <h4>What was it like?</h4>
+									<p>
+										<input type="text" placeholder="It tasted so.." class="span12" data-bind="value: ingredientsModel.tagLine">
+									</p>
+									
+									<div class="row-fluid">
+										<button class="btn btn-primary btn-large span12" id="bakeButton" data-bind="enable: ingredientsModel.ready(), click: function(){BakeOff._finishBake()}" data-loading-text="Saving..">Save</button>
+									</div>
+							</div>
+					    </div>
+					    <!-- End Bake View -->
+					    
+					    
+					    <!-- Profile -->
+					    <div id="profileView" data-bind="visible: profileView()" style="display:none">
+					    	<div class="media shadow-box">
+							  <a class="pull-left" href="#">
+							    <img class="media-object profile-photo" data-bind="attr: { src: profileModel.photo }">
+							  </a>
+							  <div class="media-body">
+							    <h4 class="media-heading" data-bind="text: profileModel.name"></h4>
+							  </div>
+							  <ul>
+							  	<li class="label"><i class="icon-food icon-grey"></i> Recipes: <span data-bind="text: profileModel.noRecipes"></span></li>
+							  	<li class="label"><i class="icon-heart icon-grey"></i> Yums: <span data-bind="text: profileModel.noLikes"></span></li>
+							  	<li class="label">
+								  	<a href="#" id="challenges_profile" rel="popover" data-original-title="Challenges Sent <a class='close' onclick='$(&quot;#challenges_profile&quot;).popover(&quot;destroy&quot;);'>&times;</a>" data-content="#challenge_popover_content">
+								  	<i class="icon-trophy icon-grey"></i> Challenges: <span data-bind="text: profileModel.noChallenges"></span>
+								  	</a>
+							  	</li>
+							  </ul>
+							</div>
+							
+							<div class="empty-shelf" data-bind="visible: profileModel.recipes().length==0">
+								<p class="lead text-center">
+									You have no recipes.
+									<span class="bake">
+				    					<a href="#" class="btn" data-bind="click: function(){BakeOff._startBake();}">Bake one <i class="icon-pencil"></i></a>
+
+									</span>
+								</p>
+							</div>
+							
+							<div class="my-recipes grid" data-bind="visible: profileModel.recipes().length > 0">
+								<ul id="baraja-el" class="baraja-container grid" data-bind="foreach: profileModel.recipes">
+									<li class="fixed-width">
+										<div class="img" data-bind="style: {backgroundImage: 'url(\''+photoUrl+'\')'} , click: function(){location.href='#!recipe/'+recipeId+'/SELF'}"></div>
+										<a data-bind="attr: { href : '#!recipe/'+recipeId+'/SELF'}">
+											<h4 data-bind="text: recipeTitle"></h4>
+										</a>
+										<p data-bind="text: tagLine"></p>
+										<div class="actions row-fluid">
+											<button class="btn span6 btn-postcard" data-bind="click: function(){BakeOff._postcard(id,recipeTitle,photoUrl,recipeId,'SELF');}">
+												<i class="icon-envelope-alt"></i> Postcard
+												<div class="tool-tip left">
+									      			Send this recipe to a friend as a <strong>full colour</strong> postcard. <br> 
+									      			For only <a href="#">&pound;2.99</a>
+									      		</div>
+											</button>
+											<button class="btn span6" data-bind="click: function(){BakeOff._challenge(id,recipeTitle,recipeId,photoUrl);}">
+												<i class="icon-trophy icon-grey"></i>&nbsp;Challenge
+											</button>
+										</div>
+									</li>
+								</ul>							
+							</div>
+					    </div>
+					    <!-- End Profile -->
+					    
+		          </div>	          
+	          </div>
+	          
+	          <!-- Recipe View -->
+	          <div class="row">
+					    <div class="recipe-details span8 offset2" data-bind="visible: recipeView()">
+							<div class="featured hearted recipe-card with-owner">
+								<a class="ribbon ribbon-left noprint" data-bind="visible: recipeModel.challenge().id && loggedIn()">
+									<i class="icon-trophy"></i>
+									<span data-bind="text: recipeModel.user().firstName"></span> challenged you
+								</a>
+							    <div class="media">
+							        <div class="media-body">
+							            <div class="media-heading">
+							            	<a class="brand onlyprint pull-left" href="#">BakeOff</a>
+							            	<i class="icon-quote-left pull-left" data-bind="visible: recipeModel.bake().tagLine"></i>
+							            	<span class="pull-left clearfix" data-bind="text: recipeModel.bake().tagLine"></span>
+							            	
+							            	<button class="btn btn-print btn-info btn-space pull-right noprint" onclick="window.print()"><i class="icon-print"></i>&nbsp;Print me</button>
+							            	
+							            	<button class="btn btn-space btn-postcard pull-right noprint" data-bind="click: function(){BakeOff._postcard(recipeModel.bake().id,recipeModel.bake().recipeTitle,recipeModel.bake().photoUrl,recipeModel.id,recipeModel.user().id);}">
+							            		<i class="icon-envelope-alt"></i> Send as a Postcard
+							            	</button>
+							            	
+							            	<button class="btn btn-space pull-right noprint" data-bind="click: function(){BakeOff._scrollTo('#challengeForm')} , visible: loggedIn() && recipeModel.challenge().id && recipeModel.user().id != BakeOff.userId"><i class="icon-pencil"></i> Bake this
+							            	</button>
+							            	
+							            	<button class="btn btn-space pull-right noprint" data-bind="click: function(){BakeOff._likeBake(recipeModel.bake().id,recipeModel.bake().bake)} , css : {'disabled btn-liked' : recipeModel.bake().hasLiked()} , visible: loggedIn()">
+							            		<i class="icon-heart" data-bind="css : {'animated bigpulse' : recipeModel.bake().hasLiked()}"></i>
+							            	</button>
+							            	
+							            </div>
+							        </div>
+							    </div>							    
+							    <div class="row-fluid recipe-photo">
+							    	<div class="span6 photo photo-heart hidden-phone" alt="" data-bind="visible:recipeModel.challenge().id"></div>
+							        <div class="span12 photo" alt="" data-bind="style: { backgroundImage : 'url(\''+recipeModel.bake().photoUrl+'\')' } , css: {'span6': recipeModel.challenge().id}"></div>
+							        <div class="avatar-bar noprint">
+							        	<div class="vs" data-bind="visible: recipeModel.challenge().id">VS</div>
+							        	<div class="fill"></div>
+							        </div>
+							        <div class="avatar-holder noprint">
+							        	<div class="pull-left name" data-bind="text: recipeModel.user().firstName"></div>
+							        	<img class="user-photo-small avatar" data-bind="attr: {src: recipeModel.user().profilePhoto}">
+							        </div>
+							        <div class="avatar-holder pull-left noprint" data-bind="visible: recipeModel.challenge().id">
+							        	<img class="user-photo-small avatar" data-bind="attr: { src: profileModel.photo }">
+							        	<div class="pull-left name" data-bind="text: profileModel.name"></div>
+							        </div>
+							    </div>
+							    <div class="recipe-header">
+							        	<h1 class="fn" data-bind="text: recipeModel.bake().recipeTitle"></h1>
+							
+							    </div>
+							    <hr class="horizontal-rule-heart">
+							    <div class="recipe-body">
+							        <div class="recipe-ingredients" data-bind="foreach: recipeModel.recipe().ingredients">
+							            <h3 data-bind="html: ingredientsHeader , visible: ingredients.length > 0"></h3>
+							
+							            <ul data-bind="foreach: ingredients">
+							                <li class="ingredient" data-bind="text: $data"></li>
+							            </ul>
+							        </div>
+							        
+							        <div class="recipe-instructions" data-bind="if:recipeModel.recipe().description">
+							            <h3>Directions</h3>
+							
+							            <p class="instructions-message" data-bind="html: recipeModel.recipe().description"></p>
+							        </div>
+							    </div>
+							    
+							    
+							    <!-- Comments -->
+							    <div id="challengeComments" class="challenge-comments noprint" data-bind="visible: loggedIn()">
+						          	<ul class="news-feed" data-bind="foreach:challengeModel.comments">
+									   <li class="comment">
+									      <img class="icon" width="48" alt="" data-bind="attr: {src: profilePhoto}">
+									      <a href="#" data-bind="text: firstName , attr: { href : '#!user/'+userId}"></a> 
+									      <span data-bind="text: comment"></span>
+									      <div class="comment-icon-wrapper"><i class="icon-comment"></i></div>
+									      <div class="meta"><span class="from" data-bind="text: prettyDate"></span></div>
+									   </li>
+									</ul>
+								</div>
+								<ul class="news-feed noprint" data-bind="visible: loggedIn()">
+									<li class="comment write-comment">
+								   		<img class="icon" width="48" alt="" data-bind="attr: { src: profileModel.photo }">
+								   		<form id="challengeCommentForm" action="#" data-bind="submit: function(){BakeOff._commentBake(recipeModel.bake().id , challengeModel.comment , challengeModel.comments, '#challengeCommentButton'); }">
+									   		<div class="input-append">
+											  <input class="span5" placeholder="Comment.." type="text" data-bind="value: challengeModel.comment, valueUpdate:[&quot;afterkeydown&quot;,&quot;propertychange&quot;,&quot;input&quot;]">
+											  <button id="challengeCommentButton" class="btn btn-info hidden-phone" type="submit" data-bind="enable: challengeModel.comment()!=''" data-loading-text="Posting.."><i class="icon-chevron-right"></i>&nbsp;<span class="hidden-phone">Comment</span></button>
+											</div>
+											<button id="challengeCommentButton" class="btn btn-info visible-phone span12" type="submit" data-bind="enable: challengeModel.comment()!=''" data-loading-text="Posting..">Comment</button>
+										</form>
+								   </li>
+								</ul>
+								<!-- End Comments -->
+							    
+							    <!-- Bake Form -->
+							    <div class="row-fluid challenge-form noprint" id="challengeForm" data-bind="visible: loggedIn() && recipeModel.user().id != BakeOff.userId">
+							    	<div class="span12 challenge-form-inner stitch">
+							    		<h3> <i class="icon-trophy"></i> Finished baking it?</h3>
+							    		<form id="challengeForm" action="#">
+							    			<p class="row-fluid">
+							    				<img class="dropshadow span6" data-bind="attr: {src: challengeModel.photoUrlSrc()} , visible: challengeModel.photoUrl()">
+							    			</p>
+								    		<p class="row-fluid">
+								    			<button class="btn btn-large btn-photo span6 pull-left" data-bind="css: {'btn-success': challengeModel.ready()} , enable: !challengeModel.ready() , click: function(){BakeOff._pickFile(ViewModel.challengeModel.photoUrl);}">
+								    			Upload a photo <i class="icon-camera"></i>
+								    			</button>
+								    			<input type="hidden" name="photoUrl" data-bind="value: challengeModel.photoUrl">
+								    		</p>
+									    	<p class="row-fluid">
+												<input type="text" placeholder="It tasted so.." name="tagLine" class="span6" data-bind="value: challengeModel.tagLine">
+											</p>
+
+										</form>
+										
+										<div class="row-fluid">
+											<button class="btn btn-large btn-success span12" id="challengeButton" data-bind="enable: challengeModel.ready(), click: function(){BakeOff._finishChallenge()}" data-loading-text="Saving..">Save</button>
+										</div>	
+									</div>
+								</div>	
+								<!-- End Bake Form -->
+								
+								<!-- Not Logged in, sign up -->
+								<div class="row-fluid login noprint" data-bind="visible: !loggedIn()">
+									<p>
+										<button class="btn btn-facebook btn-large btn-fblogin" data-bind="click: function(){BakeOff._login();}">
+						            		<i class="icon-facebook icon-3x"></i>
+						            		<span>&nbsp;Login with Facebook</span>
+						            	</button>
+						            	<button class="btn btn-large" data-bind="click: function(){ViewModel.recipeView(false);ViewModel.welcomeModel.register(true);}">
+						            		<i class="icon-lock"></i>
+						            		Signup via email
+						            	</button>
+					            	</p>
+								</div>
+								<!-- End signup -->
+								
+							</div>
+						</div>
+					    	          
+		          </div>
+		          <!-- End Recipe View -->	          
+		          
+		          
+		          <!-- User View -->
+		          <div class="row-fluid">
+					<div class="span12 wood user-view" data-bind="visible: userView()" style="display:none">
+					  <div id="profileView">
+						<div class="media shadow-box">
+						  <a class="pull-left" href="#">
+						    <img class="media-object profile-photo" data-bind="attr: { src: userModel.photo }">
+						  </a>
+						  <div class="media-body">
+						    <h4 class="media-heading" data-bind="text: userModel.name"></h4>
+						  </div>
+						  <ul>
+						  	<li class="label"><i class="icon-food icon-grey"></i> Recipes: <span data-bind="text: userModel.noRecipes"></span></li>
+						  	<li class="label"><i class="icon-heart icon-grey"></i> Yums: <span data-bind="text: userModel.noLikes"></span></li>
+						  	<li class="label"><i class="icon-trophy icon-grey"></i> Challenges: <span data-bind="text: userModel.noChallenges"></span>
+						  	</li>
+						  </ul>
+						</div>
+						
+						<div class="my-recipes grid" data-bind="visible: userModel.recipes().length > 0">
+							<ul id="baraja-el" class="baraja-container grid" data-bind="foreach: userModel.recipes">
+								<li class="span3 spaced">
+									<a data-bind="attr: { href : '#!recipe/'+recipeId+'/'+$root.userModel.userId()}">
+										<span class="image_wrapper" data-bind="style: {backgroundImage: 'url(\''+photoUrl+'\')'}"></span>
+									</a>
+									<a data-bind="attr: { href : '#!recipe/'+recipeId+'/'+$root.userModel.userId()}">
+										<h4 data-bind="text: recipeTitle"></h4>
+									</a>
+									<p data-bind="text: tagLine"></p>
+								</li>
+							</ul>							
+						</div>
+					</div>
+					</div>
+				</div>
+				<!-- End User View -->	
+				
+				<!-- Buy Postcard Address -->
+				<div class="row-fluid" data-bind="visible: postcardAddressView">
+					<div class="span10 offset1 address-form">
+						<h1>~ Send this recipe to a friend ~</h1>
+						<div class="row-fluid">
+							<div class="span6">
+								<h3>
+									<a href="#" data-bind="attr: { href : '#!recipe/'+postcardForm.recipeId()+'/'+postcardForm.userId()}, text: postcardForm.recipeName"></a>	
+								</h3>
+								<span>
+									1 x <span data-bind="text: postcardForm.recipeName"></span> postcard at &pound;2.99
+								</span>
+								<div class="row-fluid image-wrapper">
+									<img data-bind="attr: {src:postcardForm.imageUrl}" class="span12" alt="">
+								</div>
+							</div>
+							<div class="span6 polosochka">
+								<form class="form-horizontal">
+								  <div class="control-group">
+								    <label class="control-label" for="inputEmail">To:</label>
+								    <div class="controls">
+								      <input type="text" placeholder="John Smith" data-bind="value: postcardForm.address.to">
+								    </div>
+								  </div>
+								  <div class="control-group">
+								    <label class="control-label" for="inputPassword">Address:</label>
+								    <div class="controls">
+								      <input type="text" id="inputPassword" placeholder="1 Cake Street" data-bind="value: postcardForm.address.line1()">
+								    </div>
+								  </div>
+								  <div class="control-group">
+								    <label class="control-label" for="inputPassword">City:</label>
+								    <div class="controls">
+								      <input type="text" id="inputPassword" placeholder="London" data-bind="value: postcardForm.address.city">
+								    </div>
+								  </div>
+								  <div class="control-group">
+								    <label class="control-label" for="inputPassword">County/State:</label>
+								    <div class="controls">
+								      <input type="text" id="inputPassword" placeholder="London" data-bind="value: postcardForm.address.county">
+								    </div>
+								  </div>
+								  <div class="control-group">
+								    <label class="control-label" for="inputPassword">Postal code / Zip code:</label>
+								    <div class="controls">
+								      <input type="text" id="inputPassword" placeholder="SW1 5HE" data-bind="value: postcardForm.address.postcode">
+								    </div>
+								  </div>
+								  <div class="control-group">
+								    <label class="control-label" for="inputPassword">Country</label>
+								    <div class="controls">
+								      <select data-bind="options: postcardForm.address.country">
+								      </select>
+								    </div>
+								  </div>
+								  <div class="control-group">
+								    <div class="controls">
+								      <button type="submit" class="btn btn-success input-large" data-bind="click: function(){BakeOff._pay();}">
+								      	<i class="icon-envelope-alt"></i> Send
+								      </button>
+								    </div>
+								  </div>
+								</form>
+							</div>
+						</div>
+						<div class="triangle2"></div>
+					</div>
+				</div>
+				
+				<div class="row-fluid" data-bind="visible: payView">
+					<div class="span10 offset1 address-form">
+						<div class="span6">
+						</div>
+						<div class="span6 polosochka">
+							<h3>Payment details</h3>
+							<span><i class="icon-lock"></i> 100% secure using 256-bit SSL</span>
+							<div class="row-fluid card-types">
+								<img src="/images/cards/visa.png" id="visa" alt="Visa" class="span2">
+								<img src="/images/cards/mastercard.png" id="master card" alt="Mastercard" class="span2">
+								<img src="/images/cards/maestro.png" id="maestro" alt="Maestro" class="span2">
+								<img src="/images/cards/amex.png" id="amex" alt="American Express" class="span2">
+							</div>
+							
+							<form class="form-horizontal" action="#" id="payForm" data-bind="submit: function(){BakeOff._submitPayment();}">
+								<div class="alert alert-block alert-error payment-errors" style="display:none"></div>
+								<div class="control-group">
+									<label for="cc_number">Card Number</label>
+									<input type="text" id="cc_number" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" size="19">
+									<span class="help-inline"></span>
+								</div>
+								<div class="control-group">
+									<label for="cc_exp">Expiration Date (MM/YY)</label>
+									<input type="text" id="cc_exp" placeholder="MM/YY">
+									<span class="help-inline"></span>
+								</div>
+								<div class="control-group">
+									<label for="cc_name">Cardholder's Name</label>
+									<input type="text" id="cc_name" placeholder="John Doe">
+									<span class="help-inline"></span>
+								</div>
+								<div class="control-group">
+									<label for="cc_cvc">Card Validation Code</label>
+									<input type="number" id="cc_cvc" placeholder="123" maxlength="3" size="3">
+									<img src="/images/cards/cvv.jpeg" alt="The last 3 digits on the back of your card">
+									<span class="help-inline"></span>
+								</div>
+								<div class="control-group">
+								    <button type="submit" class="btn pull-left input-large">
+								      	Continue&nbsp;<i class="icon-lock"></i>
+								    </button>
+								</div>
+							</form>
+						</div>
+						<div class="triangle2"></div>
+					</div>
+				</div>
+		          
+	        </div>
+    </div>
+    
+    </div>
+    
+    <footer>
+      <div class="container">
+      	<div class="row">
+            <div class="span4">
+                <p> <a href="#" class="brand">BakeOff</a> &copy; 2013, all right reserved.</p>
+                <p>Baked with <i class="icon-heart"></i> in Norwich, UK</p>
+            </div>
+            <div class="span8">
+                <ul class="footer-ul pull-right">
+                	<li class="inline"><a href="https://twitter.com/BakeOffApp" target="_blank"><i class="icon-twitter"></i></a></li>
+                	<li class="inline"><a href="http://blog.bakeoff.co">Blog</a></li>
+                    <!--<li class="inline"><a href="/help.html">Help Me!</a></li>-->
+                    <li class="inline"><a href="/privacy.html">Privacy Policy</a></li>
+                    <li class="inline"><a href="/terms.html">Terms of Use</a></li>
+                </ul>
+            </div>
+        </div>
+      </div>
+    </footer>
+    
+    
+    <div class="overlay noprint">
+      <div class="wrap-outer">
+        <div class="wrap">
+          <div class="overlay-dialog">
+          	<button class="close">&times;</button>
+            <ul class="ca-menu dialog-content">
+				<li>
+					<a href="#">
+						<div class="ca-icon"><i class="icon-heart"></i></div>
+						<div class="ca-content">
+							<h2 class="ca-main">Bake Complete!</h2>
+						</div>
+					</a>
+				</li>
+			</ul>
+			<p></p>
+			<div class="row-fluid overlay-challenge">
+				<button class="btn btn-challenge span8 offset2"><i class="icon-trophy"></i>&nbsp;Challenge your friends</button>
+			</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="challenge_popover_content" style="display: none">
+          <ul data-bind="foreach: profileModel.sentChallenges()">
+              <li>
+              	<div class="thumbnail">
+	                  <img data-bind="attr: {src: bake.photoUrl}">
+	                  <div class="caption">
+	                    <h5 data-bind="text: bake.recipeTitle"></h5>
+	                    <div class="row-fluid">
+	                    	To <span data-bind="text: toName"></span>
+	                    </div>
+	                  </div>
+	             </div>
+              </li>
+          </ul>
+    </div>
+    
+    <div class="loader" style="display:none"><i class="icon-spinner icon-spin icon-large"></i></div>
+    
+    <!-- GA -->
+    
+    <script>
+        var _gaq=[['_setAccount','UA-39170999-1'],['_trackPageview']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
+    
+    <!-- FB and main scripts -->
+	<script>
+		/*!
+		  * $script.js Async loader & dependency manager
+		  * https://github.com/ded/script.js
+		  * (c) Dustin Diaz 2013
+		  * License: MIT
+		  */
+		(function(e,t,n){typeof module!="undefined"&&module.exports?module.exports=n():typeof define=="function"&&define.amd?define(n):t[e]=n()})("$script",this,function(){function v(e,t){for(var n=0,r=e.length;n<r;++n)if(!t(e[n]))return f;return 1}function m(e,t){v(e,function(e){return!t(e)})}function g(e,t,a){function d(e){return e.call?e():r[e]}function b(){if(!--p){r[h]=1,c&&c();for(var e in s)v(e.split("|"),d)&&!m(s[e],d)&&(s[e]=[])}}e=e[l]?e:[e];var f=t&&t.call,c=f?t:a,h=f?e.join(""):t,p=e.length;return setTimeout(function(){m(e,function(e){if(e===null)return b();if(u[e])return h&&(i[h]=1),u[e]==2&&b();u[e]=1,h&&(i[h]=1),y(!n.test(e)&&o?o+e+".js":e,b)})},0),g}function y(n,r){var i=e.createElement("script"),s=f;i.onload=i.onerror=i[d]=function(){if(i[h]&&!/^c|loade/.test(i[h])||s)return;i.onload=i[d]=null,s=1,u[n]=2,r()},i.async=1,i.src=n,t.insertBefore(i,t.firstChild)}var e=document,t=e.getElementsByTagName("head")[0],n=/^https?:\/\//,r={},i={},s={},o,u={},a="string",f=!1,l="push",c="DOMContentLoaded",h="readyState",p="addEventListener",d="onreadystatechange";return!e[h]&&e[p]&&(e[p](c,function b(){e.removeEventListener(c,b,f),e[h]="complete"},f),e[h]="loading"),g.get=y,g.order=function(e,t,n){(function r(i){i=e.shift(),e.length?g(i,r):g(i,t,n)})()},g.path=function(e){o=e},g.ready=function(e,t,n){e=e[l]?e:[e];var i=[];return!m(e,function(e){r[e]||i[l](e)})&&v(e,function(e){return r[e]})?t():!function(e){s[e]=s[e]||[],s[e][l](t),n&&n(i)}(e.join("|")),g},g.done=function(e){g([null],e)},g})
+	</script>
+	<script>
+		$script(['scripts/vendor/modernizr.min.js', 'components/knockout.js/knockout.js', 'scripts/vendor/jquery.min.js'], 'bundle');
+		$script.ready('bundle', function() {
+			$script(['scripts/jquery-easy-pie-chart.js','/scripts/main.js'],'main');
+			$script.ready('main',function(){
+				if(!BakeOff.isMobile){
+					$script('scripts/vendor/typer.js',function(){
+						$('[data-typer-targets]').typer();
+					});
+				}
+			});
+			var windowHeight = function () {
+				var t = document.documentElement.clientHeight / window.innerHeight;
+				return window.innerHeight * t;
+			},
+			t = windowHeight();
+			$('.bakeoff-unit-wrapper , .bakeoff-unit').css('height', t + 1);
+		});
+		</script>
+	
+	    	
+	<script>
+	  // Additional JS functions here
+	  window.fbAsyncInit = function() {
+	    FB.init({
+	      appId      : location.hostname=='localhost' ? '141002909430751' : '215224641951644',
+	      status     : true,
+	      cookie     : false,
+	      xfbml      : true,
+	      frictionlessRequests : true
+	    });
+	
+		$script.ready('main', function() {
+			BakeOff._init();
+		});	
+	  };
+	
+	  // Load the SDK Asynchronously
+	  (function(d){
+	     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+	     if (d.getElementById(id)) {return;}
+	     js = d.createElement('script'); js.id = id; js.async = true;
+	     js.src = "//connect.facebook.net/en_US/all.js";
+	     ref.parentNode.insertBefore(js, ref);
+	   }(document));
+	</script>
+	
+	<script src="//d3nslu0hdya83q.cloudfront.net/dist/1.0/raven.min.js"></script>
+	<script>
+	Raven.config('https://9ff8d2c98e9e4642a710605c8c2e3731@app.getsentry.com/6886', {whitelistUrls: [/bakeoff\.co/]}).install();
+	</script>
+    	
+	<!-- Fonts -->
+	<script>
+		var f, x;
+		
+		x = document.getElementsByTagName("script")[0];
+		
+		f = window.document.createElement("link");
+		
+		f.rel = "stylesheet";
+		
+		f.href = "/printstyle/fonts.css";
+		
+		window.setTimeout(function(){
+		x.parentNode.insertBefore(f, x);
+		},0);
+	</script>
+        
+</div></body>
+</html>
