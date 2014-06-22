@@ -523,7 +523,7 @@ BakeOff = (function(){
 			self.authToken = token;
 			self.userId = userId;
 			ViewModel.loggedIn(true);
-			self._viewProfile();
+			self._loadFeed();
 			self._getChallenges();
 			
 			Libs.init();
@@ -822,7 +822,7 @@ BakeOff = (function(){
 			}
 		
 			ViewModel.profileView(true);
-			ViewModel.feedView(!self.isMobile);
+			ViewModel.feedView(false);
 			ViewModel.bakeView(false);
 			ViewModel.recipeView(false);
 			ViewModel.userView(false);	
