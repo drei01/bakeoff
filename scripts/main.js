@@ -1155,6 +1155,10 @@ BakeOff = (function(){
 		},
 		_postcard: function(bakeId,title,imageUrl,recipeId,userId){
 			BakeOff._trackPage('/postcard/'+bakeId);
+			
+			window.location.href = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QG82M75G7P934&item_name=' + title;
+			
+			/*
 		
 			ViewModel.postcardForm.clear();
 			
@@ -1170,6 +1174,7 @@ BakeOff = (function(){
 			ViewModel.recipeView(false);
 			ViewModel.userView(false);
 			ViewModel.postcardAddressView(true);
+			*/
 		},
 		_pay: function(){
 			ViewModel.postcardAddressView(false);
