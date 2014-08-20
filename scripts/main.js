@@ -611,7 +611,7 @@ BakeOff = (function(){
 								if(total == 0){
 									total = 0;
 								}
-								return (item.bake.votes.length / total) * 100;
+								return ((item.bake.votes.length / total) * 100).toFixed(0);
 							});
 							
 							item.challengeBake.percentage = ko.computed(function(){
@@ -619,7 +619,7 @@ BakeOff = (function(){
 								if(total == 0){
 									total = 0;
 								}
-								return (item.challengeBake.votes.length / total) * 100;
+								return ((item.challengeBake.votes.length / total) * 100).toFixed(0);
 
 							});
 							
