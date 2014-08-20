@@ -325,7 +325,7 @@ ViewModel.profileView.subscribe(function(newValue) {
 
 BakeOff = (function(){
 	return{
-		baseUrl : location.hostname=='localhost' ? 'http://localhost:9090' : 'https://bakeapi-bakeoff.rhcloud.com',
+		baseUrl : 'https://bakeapi-bakeoff.rhcloud.com',
 		loginSubscription : null,
 		hasLoaded : false,
 		authToken : null,
@@ -689,6 +689,14 @@ BakeOff = (function(){
 					$('#newRecipe').hide();
 				}
 			});
+			
+			try{
+				if(!window.paypal){
+					$.getScript('//cdnjs.cloudflare.com/ajax/libs/minicart/3.0.5/minicart.min.js',function(){
+						paypal.minicart.render();
+					});
+				}
+			}catch(err){}
 		},
 		_startBake: function(){
 			Libs.loadFilepicker();//load the file picker if required
@@ -1156,7 +1164,9 @@ BakeOff = (function(){
 		_postcard: function(bakeId,title,imageUrl,recipeId,userId){
 			BakeOff._trackPage('/postcard/'+bakeId);
 			
-			window.location.href = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QG82M75G7P934&item_name=' + title;
+			//window.location.href = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QG82M75G7P934&item_name=' + title;
+			
+			paypal.minicart.cart.add({ "business": "mcreidie@hotmail.com", "item_name": title, "amount": 2.99, "currency_code": "GBP" });
 			
 			/*
 		
