@@ -632,24 +632,24 @@ BakeOff = (function(){
 							});
 							
 							item.bake.hasVoted = ko.computed(function(){
+								var hasVoted = false;
 								item.bake.votes.forEach(function(id){
 									if(id == self.userId){
+										hasVoted = true;
 										return true;
 									}
 								});
-								return false;
+								return hasVoted;
 							});
 							
 							item.challengeBake.hasVoted = ko.computed(function(){
 								var hasVoted = false;
-								
-								$.each(item.challengeBake.votes,function(key,id){
+								item.challengeBake.votes.forEach(function(id){
 									if(id == self.userId){
 										hasVoted = true;
-										return false;
+										return true;
 									}
 								});
-								
 								return hasVoted;
 							});
 							
