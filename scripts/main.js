@@ -1458,6 +1458,15 @@ Libs = (function(){
 		    	}
 		    },4000);
 			
+			if(window.localStorage){
+				var shownFeedback = localStorage['shownFeedback'];
+				if(shownFeedback){
+					$('#live-chat').hide();
+				}
+				
+				localStorage['shownFeedback'] = true;
+			}
+			
 			$('#live-chat header').on('click', function() {
 				$('.chat').slideToggle(300, 'swing');
 				$('.chat-message-counter').fadeToggle(300, 'swing');

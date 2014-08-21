@@ -1012,7 +1012,7 @@
 
 			</div> <!-- end chat-history -->
 
-			<form action="//forms.brace.io/hello@bakeoff.co" method="POST" autocomplete="off">
+			<form action="//forms.brace.io/hello@bakeoff.co" method="POST" autocomplete="off" id="feedbackForm">
 
 				<fieldset>
 					
@@ -1087,6 +1087,12 @@
 	
 	    	
 	<script>
+	  if (typeof FB !== 'undefined') {
+	  	$script.ready('main', function() {
+			BakeOff._init();
+		});
+	  }
+		
 	  // Additional JS functions here
 	  window.fbAsyncInit = function() {
 	    FB.init({
