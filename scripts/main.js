@@ -632,16 +632,12 @@ BakeOff = (function(){
 							});
 							
 							item.bake.hasVoted = ko.computed(function(){
-								var hasVoted = false;
-								
-								$.each(item.bake.votes,function(key,id){
+								item.bake.votes.forEach(function(id){
 									if(id == self.userId){
-										hasVoted = true;
-										return false;
+										return true;
 									}
 								});
-								
-								return hasVoted;
+								return false;
 							});
 							
 							item.challengeBake.hasVoted = ko.computed(function(){
