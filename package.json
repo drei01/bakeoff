@@ -15,6 +15,7 @@
     "hjs": "~0.0.6",
     "node-compass": "0.2.3",
     "connect-coffee-script": "~0.2.0",
-    "connect": "~2.25.7"
+    "connect": "~2.25.7",
+    "newrelic": "~1.10.1"
   }
 }
