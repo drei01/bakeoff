@@ -1,0 +1,393 @@
+.avatar img.user-photo-large,img.user-photo-large {
+    height: 90px;
+    width: 90px;
+}
+ 
+.avatar img.user-photo-medium,img.user-photo-medium {
+    height: 60px;
+    width: 60px;
+}
+ 
+.avatar img.user-photo-small,img.user-photo-small {
+    height: 40px;
+    width: 40px;
+}
+ 
+.avatar {
+    -webkit-border-radius: 500px;
+    -moz-border-radius: 500px;
+    border-radius: 500px;
+    *zoom: 1;
+    float: left;
+    width: auto;
+    background-color: #fff;
+    border: 1px solid #fff;
+}
+ 
+.avatar:before,.avatar:after {
+    display: table;
+    content: "";
+    line-height: 0;
+}
+ 
+.avatar:after {
+    clear: both;
+}
+ 
+.avatar.large {
+    width: 90px;
+}
+ 
+.avatar.medium {
+    width: 60px;
+}
+ 
+.avatar.small {
+    width: 40px;
+}
+ 
+.avatar a {
+    width: auto;
+}
+ 
+.avatar img {
+    -webkit-border-radius: 500px;
+    -moz-border-radius: 500px;
+    border-radius: 500px;
+    box-shadow: 0 1px 1px rgba(255,255,255,0.2),inset 0 1px 2px rgba(0,0,0,0.4);
+    width: auto;
+}
+
+.recipe-card .media {
+    width: 100%;
+    color: #ad9b86;
+    background-color: rgba(173,155,134,0.1);
+}
+ 
+.recipe-card .media .media-object {
+    margin: 10px 0 10px 10px;
+}
+ 
+.recipe-card .media .media-heading {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: 0;
+    font-weight: 600;
+}
+ 
+.recipe-card .media .media-heading span.heart {
+    float: left;
+    margin: -2px 3px 0 0;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+ 
+.recipe-card .media .media-body {
+    padding: 10px;
+}
+ 
+.recipe-card .media .media-body span {
+    font-size: 0.9em;
+    line-height: 1.2em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+}
+ 
+.recipe-card .media .media-actions {
+    float: right;
+}
+
+.recipe-card .login {
+	text-align: center;
+}
+
+.recipe-details .recipe-card {
+    padding: 0;
+    margin-bottom: 40px;
+    background: #FFFFFF;
+    position: relative;
+}
+ 
+.recipe-details .recipe-card h1 {
+    font-size: 50px;
+    text-align: center;
+    margin: 0;
+}
+ 
+.recipe-details .recipe-card .recipe-summary {
+    font-style: italic;
+    text-align: center;
+    display: block;
+    margin: 20px 0 0 0;
+}
+ 
+.recipe-details .recipe-card .recipe-header {
+    padding: 20px 40px;
+}
+ 
+.recipe-details .recipe-card .recipe-body {
+    *zoom: 1;
+    background-color: rgba(173,155,134,0.1);
+    padding: 20px;
+    margin: 20px;
+    border-radius: 5px;
+}
+ 
+.recipe-details .recipe-card .recipe-body:before,.recipe-details .recipe-card .recipe-body:after {
+    display: table;
+    content: "";
+    line-height: 0;
+}
+ 
+.recipe-details .recipe-card .recipe-body:after {
+    clear: both;
+}
+ 
+.recipe-details .recipe-card .recipe-body h3 {
+    margin: 0;
+    font-weight: 300;
+    font-size: 40px;
+    line-height: 1.5em;
+    font-family: "Sacramento","Helvetica Neue",Helvetica,Arial,sans-serif;
+    text-shadow: 0 1px 0 #fff;
+}
+ 
+.recipe-details .recipe-card .recipe-body ul {
+    list-style-type: none;
+    margin: 0;
+}
+ 
+.recipe-details .recipe-card .recipe-body ul li.ingredient {
+    text-shadow: 0 1px 0 #fff;
+    margin-bottom: 10px;
+    line-height: 1.3em;
+}
+ 
+.recipe-details .recipe-card .recipe-body ol {
+    margin: 0;
+    list-style-type: none;
+}
+ 
+.recipe-details .recipe-card .recipe-body ol li {
+    text-shadow: 0 1px 0 #fff;
+    margin-bottom: 10px;
+}
+ 
+.recipe-details .recipe-card .recipe-image {
+    display: block;
+    text-align: center;
+    padding: 20px 20px 0 20px;
+}
+ 
+.recipe-details .recipe-card .recipe-image.photo-is-wide {
+    padding: 0;
+}
+ 
+.recipe-details .recipe-card .media {
+    border-bottom: 1px dashed #dfdfdf;
+}
+ 
+.recipe-details .recipe-card .media.media-footer {
+    border-top: 1px dashed #dfdfdf;
+    border-bottom: 0;
+}
+ 
+.recipe-details .recipe-card .media .media-body {
+    padding: 15px 10px;
+}
+ 
+.recipe-details .recipe-card .media .media-actions {
+    padding-right: 5px;
+}
+
+.recipe-details .recipe-photo{
+	position: relative;
+	max-height: 500px;
+	overflow: hidden;
+	margin-bottom: 15px;
+}
+
+.recipe-details .recipe-photo .photo-heart{
+	background-image:url(/images/question_heart.jpg);
+}
+
+.recipe-details .recipe-photo .photo{
+	background-size: cover;
+	background-position: 50% 50%;
+	height: 400px;
+	margin: 0;
+}
+
+.recipe-details .recipe-photo .photo.span6{
+	margin-top: 0;
+	width: 50%;
+}
+
+.recipe-details .recipe-photo .avatar-holder{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	color:#FFF;
+	line-height:40px;
+}
+
+.recipe-details .recipe-photo .avatar-holder.pull-left{
+	left:0;
+	right:auto;
+}
+
+.recipe-details .recipe-photo .avatar-bar{
+	position: absolute;
+	bottom: 0;
+	height: 45px;
+	width: 100%;
+}
+
+.recipe-details .recipe-photo .avatar-bar .fill{
+	background-color: #000;
+	opacity: 0.5;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	bottom: 0;
+}
+
+.recipe-details .recipe-photo .avatar-bar .vs{
+	width: 40px;
+	margin: 0 auto;
+	font-size: 20px;
+	color: #FFF;
+	background-color: #000;
+	border: 2px solid #eee;
+	border-radius: 50px;
+	box-shadow: 0 3px 2px rgba(0, 0, 0, 0.3);
+	text-align: center;
+	height: 40px;
+	line-height: 37px;
+	z-index: 1;
+	position: relative;
+}
+
+.recipe-details .recipe-photo .avatar-holder .name{
+	padding-right:5px;
+	padding-left:5px;
+}
+
+.thumbnail,.recipe-card,.info-card {
+    display: block;
+    padding: 4px;
+    line-height: 20px;
+    border: 1px solid #ddd;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.055);
+    -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.055);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.055);
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+.ribbon.ribbon-right {
+	right: 0;
+	margin-right: -6px;
+	-webkit-box-shadow: -1px 1px 2px rgba(0,0,0,0.5);
+	-moz-box-shadow: -1px 1px 2px rgba(0,0,0,0.5);
+	box-shadow: -1px 1px 2px rgba(0,0,0,0.5);
+}
+.ribbon.ribbon-right:after{
+	content: "";
+	position: absolute;
+	width: 0;
+	height: 0;
+	border-width: 0 6px 10px 0;
+	border-style: solid;
+	border-color: #38b44a transparent;
+	top: -10px;
+	right: 0;
+}
+.ribbon.ribbon-left {
+	left: 0;
+	margin-left: -6px;
+	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+	-moz-box-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+	box-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+.ribbon.ribbon-left:after {
+	content: "";
+	position: absolute;
+	width: 0;
+	height: 0;
+	top: -10px;
+	left: 0;
+	border-width: 0 0 10px 6px;
+	border-style: solid;
+	border-color: #38b44a transparent;
+}
+.ribbon {
+	display: block;
+	color: #fff;
+	background-color: #38b44a;
+	background-image: linear-gradient(to bottom, #62c462, #51a351);
+	padding: 2px 5px;
+	position: absolute;
+	top: 85px;
+	min-width: 40px;
+	text-decoration: none;
+	z-index: 1;
+}
+
+.ribbon:hover{
+	color:#fff;
+	text-decoration: none;
+}
+
+.btn-space{
+	margin-right:10px;
+	clear:left;
+}
+
+.challenge-form .challenge-form-inner{
+	margin-top: -20px;
+	margin-bottom: 0px;
+	padding: 5px 15px 20px 15px;
+}
+
+.challenge-comments:before , .challenge-form:before {
+    content:'';
+    display: block;
+    border-bottom: 1px solid #dddddd;
+    border-top: 1px solid #dddddd;
+    border-right: 2px solid transparent;
+    border-left: 3px solid transparent;
+    padding: 0;
+    margin-bottom: 15px;
+    margin-left: -3px;
+    background-image: url(data:image/png;base64,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);
+    height:40px;
+    width: 100%;
+}
+
+#challengeForm .btn-photo{
+	margin-bottom: 30px;
+}
+
+@media (max-width: 767px){
+	.challenge-comments:before , .challenge-form:before{
+		width: 99%;
+	}
+	
+	.recipe-details .recipe-photo .photo.span6{
+		width: 100%;
+	}
+}
+
+.btn-print{
+	font-weight:200;
+}
+
+.onlyprint{display:none;}

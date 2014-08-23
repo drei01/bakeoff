@@ -1,0 +1,6 @@
+body{background:#FFFFFF;}
+.navbar , footer , .noprint , #ueButton , #ueChatButton {display:none;}
+.brand{font-size: 25px;padding-right:10px;}
+.onlyprint{display:block;}
+.recipe-photo{height:200px;overflow:hidden;}
+.recipe-photo img{margin-top:-50px;}
