@@ -1,11 +1,13 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('static-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var coffeescript = require('connect-coffee-script');
-var connect = require('connect');
+var express = require('express'),
+    path = require('path'),
+    favicon = require('static-favicon'),
+    logger = require('morgan'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    coffeescript = require('connect-coffee-script'),
+    connect = require('connect'),
+    port    = process.env.OPENSHIFT_NODEJS_PORT || '9090',
+    ipaddr  = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
 var routes = require('./routes/index');
 
@@ -67,6 +69,6 @@ app.use(function(err, req, res, next) {
 });
 
 
-app.listen(8000);
-
-module.exports = app;
+app.listen(port, ipaddr, function(){
+  console.log('%s: Node server started on %s:%d ...', Date(Date.now()), ipaddr, port);
+});
