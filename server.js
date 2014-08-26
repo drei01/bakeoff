@@ -26,7 +26,7 @@ app.use(cookieParser());
 //compass
 console.log(path.join(__dirname, '/public'));
 app.use(require('node-compass')({
-    project: project: path.join(__dirname, '/public'), 
+    project: path.join(__dirname, '/public'), 
     sass: 'styles',
     css: 'styles'
 }));
