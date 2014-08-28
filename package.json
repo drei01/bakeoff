@@ -13,10 +13,11 @@
     "body-parser": "~1.0.0",
     "debug": "~0.7.4",
     "hjs": "~0.0.6",
-    "node-compass": "0.2.3",
     "connect-coffee-script": "~0.2.0",
     "connect": "~2.25.7",
     "newrelic": "~1.10.1",
-    "compass": "~0.1.0"
+    "compass": "~0.1.0",
+    "grunt": "~0.4.5",
+    "grunt-contrib-compass": "~0.9.1"
   }
 }

@@ -23,29 +23,6 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
-app.use(require('node-compass')({
-    project: path.join(__dirname, '/public'), 
-    sass: 'styles',
-    css: 'styles'
-}));
-// the error handler is strategically
-// placed *below* the app.router; if it
-// were above it would not receive errors
-// from app.get() etc 
-app.use(error);
-
-// error handling middleware have an arity of 4
-// instead of the typical (req, res, next),
-// otherwise they behave exactly like regular
-// middleware, you may have several of them,
-// in different orders etc.
-function error(err, req, res, next) {
-  // log it
-  console.error(err.stack);
-
-  // respond with 500 "Internal Server Error".
-  res.send(500);
-}
 //coffeescript
 app.use(coffeescript({
   src: path.join(__dirname, 'public'),
