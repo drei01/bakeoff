@@ -1,101 +1,99 @@
 {{<layout}}
+	
+	{{$nav}}
+			
+					<a class="brand" style="display:none;" href="/" data-bind="visible: !loggedIn()">BakeOff</a>
+					<a class="brand" style="display:none;" href="/" data-bind="visible: loggedIn() , click: function(){BakeOff._viewFeed();}">BakeOff</a>
+
+					<ul class="nav pull-right" data-bind="visible: loggedIn()" style="display:none;">
+						<!-- Notifications -->
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle challenge-toggle" data-toggle="drop down" data-bind="visible: profileModel.notifications().length>0">
+								<span class="badge badge-success" data-bind="text: profileModel.notifications().length"></span>
+								<b class="caret"></b>
+							</a>
+							<ul class="dropdown-menu challenges">
+								  <li>&nbsp;<i class="icon-trophy"></i> Challenges</li>
+								  <!-- ko foreach: profileModel.notifications() -->
+								  <li>
+										<div class="thumbnail">
+											  <img data-bind="attr: {src: bake.photoUrl}" src="">
+											  <div class="caption">
+												<h5 data-bind="text: bake.recipeTitle"></h5>
+												<div class="row-fluid">
+													<a href="#" class="btn btn-success span12" data-bind="attr: { href : '#!challenge/'+id}">View</a>
+												</div>
+											  </div>
+										 </div>
+								  </li>
+								  <!-- /ko -->
+							</ul>
+						</li>
+						<!-- End Notifications -->
+						<li>
+							<a href="#" data-bind="click: function(){BakeOff._startBake();}" id="newRecipe"><span class="hidden-phone">New Recipe</span> <i class="icon-pencil"></i></a>
+						</li>
+
+						<li>
+							<a href="#" data-bind="click: function(){BakeOff._viewFeed();}"><span class="hidden-phone">News Feed </span><i class="icon-tasks"></i></a>
+						</li>
+
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							  <span class="hidden-phone">Account</span>
+							  <span class="visible-phone"><i class="icon-reorder"></i></span> 
+							  <b class="caret hidden-phone"></b>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="#" data-bind="click: function(){BakeOff._viewProfile();}"><i class="icon-user"></i> Profile</a></li>
+								<li><a href="#" data-bind="click: function(){BakeOff._logout();}"><i class=" icon-signout"></i> Logout</a></li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="nav pull-right" data-bind="visible: !loggedIn() && !loading()">
+						<li>
+							<a href="#" data-bind="click: function(){ViewModel.recipeView(false);ViewModel.welcomeModel.register(true);}">Signup</a>
+						</li>
+						<li>
+							<a href="#" class="login" data-toggle="dropdown">Login</a>
+							<div class="dropdown-menu">
+								<form id="formLogin" class="form" action="#" data-bind="submit: function(){BakeOff._authenticateWithForm(loginForm);}">
+									<a class="btn btn-facebook btn-block pull-left" href="#" data-bind="click: function(){BakeOff._login();}"><i class="icon-facebook"></i> Login with Facebook</a>
+
+									<div class="clearfix">
+										<hr class="horizontal-rule-or"/>
+									</div>
+
+									<div class="alert alert-block alert-error" style="display:none;">
+									  <h4>Oops.</h4>
+									  Check your email address and password or use Facebook login.
+									</div>
+
+									<div class="input-prepend">
+										<span class="add-on"><i class="icon-user"></i></span>
+										<input name="email" type="email" placeholder="Email" data-bind="value:loginForm.email">
+									</div>
+									<div class="input-prepend">
+										<span class="add-on"><i class="icon-lock"></i></span>
+										<input name="password" type="password" placeholder="Password" data-bind="value:loginForm.password">
+									</div>
+
+									<button type="submit" class="btn pull-right" id="loginFormButton" data-loading-text="Logging in..">Login</button>
+								</form>
+							</div>
+						</li>
+					</ul>
+			
+	{{/nav}}
+  
   {{$content}}
 	<div id="fb-root"></div>
 	
 	<!--[if lt IE 7]>
             <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->
-    
-    <div class="navbar navbar-static-top">
-		<div class="navbar-inner">
-			<div class="container">
-				<a class="brand" style="display:none;" href="/" data-bind="visible: !loggedIn()">BakeOff</a>
-				<a class="brand" style="display:none;" href="/" data-bind="visible: loggedIn() , click: function(){BakeOff._viewFeed();}">BakeOff</a>
-				
-				<ul class="nav pull-right" data-bind="visible: loggedIn()" style="display:none;">
-			    	<!-- Notifications -->
-			    	<li class="dropdown">
-			    		<a href="#" class="dropdown-toggle challenge-toggle" data-toggle="drop down" data-bind="visible: profileModel.notifications().length>0">
-			    			<span class="badge badge-success" data-bind="text: profileModel.notifications().length"></span>
-			    			<b class="caret"></b>
-			    		</a>
-			    		<ul class="dropdown-menu challenges">
-			    			  <li>&nbsp;<i class="icon-trophy"></i> Challenges</li>
-			    			  <!-- ko foreach: profileModel.notifications() -->
-				              <li>
-					              	<div class="thumbnail">
-						                  <img data-bind="attr: {src: bake.photoUrl}" src="">
-						                  <div class="caption">
-						                    <h5 data-bind="text: bake.recipeTitle"></h5>
-						                    <div class="row-fluid">
-						                    	<a href="#" class="btn btn-success span12" data-bind="attr: { href : '#!challenge/'+id}">View</a>
-						                    </div>
-						                  </div>
-						             </div>
-				              </li>
-				              <!-- /ko -->
-						</ul>
-			    	</li>
-			    	<!-- End Notifications -->
-			    	<li>
-			    		<a href="#" data-bind="click: function(){BakeOff._startBake();}" id="newRecipe"><span class="hidden-phone">New Recipe</span> <i class="icon-pencil"></i></a>
-			    	</li>
-			    	
-			    	<li>
-			    		<a href="#" data-bind="click: function(){BakeOff._viewFeed();}"><span class="hidden-phone">News Feed </span><i class="icon-tasks"></i></a>
-			    	</li>
-			    	
-			    	<li class="dropdown">
-					    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					      <span class="hidden-phone">Account</span>
-					      <span class="visible-phone"><i class="icon-reorder"></i></span> 
-					      <b class="caret hidden-phone"></b>
-					    </a>
-					    <ul class="dropdown-menu">
-					    	<li><a href="#" data-bind="click: function(){BakeOff._viewProfile();}"><i class="icon-user"></i> Profile</a></li>
-		            		<li><a href="#" data-bind="click: function(){BakeOff._logout();}"><i class=" icon-signout"></i> Logout</a></li>
-					    </ul>
-					</li>
-			    </ul>
-			    <ul class="nav pull-right" data-bind="visible: !loggedIn() && !loading()">
-			    	<li>
-			    		<a href="#" data-bind="click: function(){ViewModel.recipeView(false);ViewModel.welcomeModel.register(true);}">Signup</a>
-			    	</li>
-			    	<li>
-			    		<a href="#" class="login" data-toggle="dropdown">Login</a>
-			    		<div class="dropdown-menu">
-                            <form id="formLogin" class="form" action="#" data-bind="submit: function(){BakeOff._authenticateWithForm(loginForm);}">
-                            	<a class="btn btn-facebook btn-block pull-left" href="#" data-bind="click: function(){BakeOff._login();}"><i class="icon-facebook"></i> Login with Facebook</a>
-                            	
-                            	<div class="clearfix">
-                            		<hr class="horizontal-rule-or"/>
-                            	</div>
-                            	
-                            	<div class="alert alert-block alert-error" style="display:none;">
-								  <h4>Oops.</h4>
-								  Check your email address and password or use Facebook login.
-								</div>
-                            	
-							    <div class="input-prepend">
-							    	<span class="add-on"><i class="icon-user"></i></span>
-							    	<input name="email" type="email" placeholder="Email" data-bind="value:loginForm.email">
-							    </div>
-							    <div class="input-prepend">
-							    	<span class="add-on"><i class="icon-lock"></i></span>
-							    	<input name="password" type="password" placeholder="Password" data-bind="value:loginForm.password">
-							    </div>
-							    
-							    <button type="submit" class="btn pull-right" id="loginFormButton" data-loading-text="Logging in..">Login</button>
-							</form>
-                        </div>
-			    	</li>
-			    </ul>
-	        </div>
-	    </div><!-- /navbar-inner -->
-	    <div class="stitching"></div>
-	</div>
 	
-	<div class="content-wrapper">
+	
 	
 	<div data-bind="visible: !loggedIn() && !recipeView()" style="display:none;"> 
 		<div class="bakeoff-unit-wrapper">
@@ -901,25 +899,7 @@
     
     </div>
     
-    <footer>
-      <div class="container">
-      	<div class="row">
-            <div class="span4">
-                <p> <a href="#" class="brand">BakeOff</a> &copy; 2013, all right reserved.</p>
-                <p>Baked with <i class="icon-heart"></i> in Norwich, UK</p>
-            </div>
-            <div class="span8">
-                <ul class="footer-ul pull-right">
-                	<li class="inline"><a href="https://twitter.com/BakeOffApp" target="_blank"><i class="icon-twitter"></i></a></li>
-                	<li class="inline"><a href="http://blog.bakeoff.co">Blog</a></li>
-                    <!--<li class="inline"><a href="/help.html">Help Me!</a></li>-->
-                    <li class="inline"><a href="/privacy.html">Privacy Policy</a></li>
-                    <li class="inline"><a href="/terms.html">Terms of Use</a></li>
-                </ul>
-            </div>
-        </div>
-      </div>
-    </footer>
+    
     
     
     <div class="overlay noprint">
@@ -1021,8 +1001,12 @@
     </div>
     
     <div class="loader" style="display:none;"><i class="icon-spinner icon-spin icon-large"></i></div>
-    
-    <!-- GA -->
+  {{/content}}
+
+  {{$footer}} {{/footer}}
+		
+  {{$scripts}}
+  	<!-- GA -->
     
     <script>
         var _gaq=[['_setAccount','UA-39170999-1'],['_trackPageview']];
@@ -1115,5 +1099,5 @@
 		x.parentNode.insertBefore(f, x);
 		},0);
 	</script>
-  {{/content}}
+  {{/scripts}}
 {{/layout}} 

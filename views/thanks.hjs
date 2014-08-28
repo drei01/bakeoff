@@ -1,0 +1,20 @@
+{{<layout}}
+	
+	{{$nav}}
+		<a class="brand" href="/">BakeOff</a>
+	{{/nav}}
+	
+	{{$content}}
+		<div class="hero-unit">
+			<h1>Thanks for your purchase :)</h1>
+			<p>
+				You will receive and email from PayPal confirming your purchase.
+				Your postcard will be hand-crafted posted out to you as soon as possible.
+			</p>
+			<p><a href="http://www.bakeoff.co/" class="btn btn-primary btn-large">Take me back to BakeOff »</a></p>
+		  </div> 
+	{{/content}}
+	
+	{{$scripts}}{{/scripts}}
+
+{{/layout}}

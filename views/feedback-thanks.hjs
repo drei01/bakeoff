@@ -1,0 +1,16 @@
+{{<layout}}
+	
+	{{$nav}}
+		<a class="brand" href="/">BakeOff</a>
+	{{/nav}}
+	
+	{{$content}}
+		<div class="hero-unit" style="background: url('/images/rasps.jpg');background-size:cover;height:500px">
+			<h1 style="color:#fff;text-shadow:0 0 15px rgba(0,0,0,.6),0 -1px 1px rgba(0,0,0,.6)">Thanks for your feedback :)</h1>
+			<p><a href="http://www.bakeoff.co/" class="btn btn-primary btn-large">Take me back to BakeOff »</a></p>
+		  </div>  
+	{{/content}}
+	
+	{{$scripts}}{{/scripts}}
+
+{{/layout}}
